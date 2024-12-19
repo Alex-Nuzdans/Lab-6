@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace Lab_6
         abstract public void meow(int N);
         public abstract override string ToString();
     }
-    internal class NO_Cat : Meoweable
+    class NO_Cat : Meoweable
     {
         public NO_Cat()
         {
@@ -30,7 +30,7 @@ namespace Lab_6
             return "НЕ КОТ!";
         }
     }
-    internal class Cat:Meoweable
+    class Cat:Meoweable
     {
         private string name;
         public Cat(string Name)
@@ -58,7 +58,7 @@ namespace Lab_6
             }
             else
             {
-                meows = "молчит.";
+                meows = "молчит...";
             }
             Console.WriteLine(name+": " +meows);
         }
@@ -67,7 +67,292 @@ namespace Lab_6
             return "Кот: " + name;
         }
     }
-    internal class Work
+
+    public interface ICloneable
+    {
+        object Clone();
+    }
+    public interface Ifractions
+    {
+        public fractions_cach converter();
+        public void new_num(int num);
+        public void new_den(int den);
+    }
+    class fractions:ICloneable,Ifractions
+    {
+        private int numerator;
+        private int denominator;
+        public fractions(int num,int den)
+        {
+            if (den < 0)
+            {
+                num *= -1;
+                den *= -1;
+            }
+            else if (den == 0)
+            {
+                den = 1;
+            }
+            numerator = num;
+            denominator = den;
+        }
+
+        public fractions_cach converter()
+        {
+            double temp = Convert.ToDouble(numerator) / Convert.ToDouble(denominator);
+            fractions_cach cach = new fractions_cach(temp);
+            return cach;
+        }
+        public void new_num(int num) {
+            numerator = num;
+        }
+        public void new_den(int den)
+        {
+            if (den == 0)
+            {
+                Console.WriteLine("Значение не может быть нулевым.");
+                den = 1; 
+            }
+            denominator = den;
+        }
+        private int GCD(int a,int b)
+        {
+            if (a < 0)
+            {
+                a *= -1;
+            }
+            while (a != 0 && b != 0) {
+                if (a > b)
+                {
+                    a %= b;
+                }
+                else
+                {
+                    b %= a;
+                }
+            }
+            if (a > 0){
+                return a;
+            }
+            if (b > 0)
+            {
+                return b;
+            }
+            return 0;
+        }
+        public override bool Equals(object? obg)
+        {
+            if(obg is fractions F)
+            {
+                return (numerator == F.numerator && denominator==F.denominator);
+            }
+            return false;
+        }
+        public object Clone()
+        {
+            return new fractions(numerator,denominator);
+        }
+        public static fractions operator +(fractions A, fractions B)
+        {
+            int num=0;
+            int den=0;
+            if (A.denominator == B.denominator)
+            {
+                num = A.numerator + B.numerator;
+            }
+            else {
+                num = A.numerator * B.denominator + B.numerator * A.denominator;
+                den = A.denominator * B.denominator;
+                int del = A.GCD(num, den);
+                if (del != 0)
+                {
+                    num/= del;
+                    den/= del;
+                }
+            }
+            Console.Write(A+" + "+B+" = ");
+            return new fractions(num,den);
+        }
+        public static fractions operator -(fractions A, fractions B)
+        {
+            int num = 0;
+            int den = 0;
+            if (A.denominator == B.denominator)
+            {
+                num = A.numerator - B.numerator;
+            }
+            else
+            {
+                num = A.numerator * B.denominator - B.numerator * A.denominator;
+                den = A.denominator * B.denominator;
+                int del = A.GCD(num, den);
+                if (del != 0)
+                {
+                    num /= del;
+                    den /= del;
+                }
+            }
+            Console.Write(A + " - " + B + " = ");
+            return new fractions(num, den);
+        }
+        public static fractions operator *(fractions A, fractions B)
+        {
+
+            Console.Write(A + " * " + B + " = ");
+            return new fractions(A.numerator*B.numerator, A.denominator*B.denominator);
+        }
+        public static fractions operator /(fractions A, fractions B)
+        {
+            Console.Write(A + " : " + B + " = ");
+            return new fractions(A.numerator * B.denominator, A.denominator * B.numerator);
+        }
+        public static fractions  operator +(fractions A, int B)
+        {
+            fractions den = new fractions(B,1);
+            Console.Write(A + " + " + B + " = ");
+            return A+den;
+        }
+        public static fractions operator -(fractions A, int B)
+        {
+            fractions den = new fractions(B, 1);
+            Console.Write(A + " - " + B + " = ");
+            return A - den;
+        }
+        public static fractions operator *(fractions A, int B)
+        {
+            fractions den = new fractions(B, 1);
+            Console.Write(A + " * " + B + " = ");
+            return A * den;
+        }
+        public static fractions operator /(fractions A, int B)
+        {
+            fractions den = new fractions(B, 1);
+            Console.Write(A + " : " + B + " = ");
+            return A / den;
+        }
+        public static fractions operator +(int A, fractions B)
+        {
+            fractions den = new fractions(A, 1);
+            Console.Write(A + " + " + B + " = ");
+            return den + B;
+        }
+        public static fractions operator -(int A, fractions B)
+        {
+            fractions den = new fractions(A, 1);
+            Console.Write(A + " - " + B + " = ");
+            return den - B;
+        }
+        public static fractions operator *(int A, fractions B)
+        {
+            fractions den = new fractions(A, 1);
+            Console.Write(A + " * " + B + " = ");
+            return den * B;
+        }
+        public static fractions operator /(int A, fractions B)
+        {
+            fractions den = new fractions(A, 1);
+            Console.Write(A + " : " + B + " = ");
+            return den / B;
+        }
+        public fractions sum(fractions B)
+        {
+            int num = 0;
+            int den = 0;
+            if (denominator == B.denominator)
+            {
+                num = numerator + B.numerator;
+            }
+            else
+            {
+                num = numerator * B.denominator + B.numerator * denominator;
+                den = denominator * B.denominator;
+                int del = GCD(num, den);
+                if (del != 0)
+                {
+                    num /= del;
+                    den /= del;
+                }
+            }
+            Console.Write(numerator+" / "+denominator+ " + " + B + " = ");
+            return new fractions(num, den);
+        }
+        public fractions minus(fractions B)
+        {
+            int num = 0;
+            int den = 0;
+            if (denominator == B.denominator)
+            {
+                num = numerator - B.numerator;
+                den = denominator;
+            }
+            else
+            {
+                num = numerator * B.denominator - B.numerator * denominator;
+                den = denominator * B.denominator;
+                int del = GCD(num, den);
+                if (del != 0)
+                {
+                    num /= del;
+                    den /= del;
+                }
+            }
+            Console.Write(numerator + " / " + denominator + " - " + B + " = ");
+            return new fractions(num, den);
+        }
+        public fractions comp(fractions B)
+        {
+            Console.Write(numerator + " / " + denominator + " * " + B + " = ");
+            return new fractions(numerator * B.numerator, denominator * B.denominator);
+        }
+        public fractions div(fractions B)
+        {
+            Console.Write(numerator + " / " + denominator + " : " + B + " = ");
+            return new fractions(numerator * B.denominator, denominator * B.numerator);
+        }
+        public fractions sum(int A)
+        {
+            fractions den = new fractions(A, 1);
+            Console.Write(numerator + " / " + denominator + " + " + A + " = ");
+            return sum(den);
+        }
+        public fractions minus(int A)
+        {
+            fractions den = new fractions(A, 1);
+            Console.Write(numerator + " / " + denominator + " - " + A + " = ");
+            return minus(den);
+        }
+        public fractions div(int A)
+        {
+            fractions den = new fractions(A, 1);
+            Console.Write(numerator + " / " + denominator + " : " + A + " = ");
+            return div(den);
+        }
+        public fractions comp(int A)
+        {
+            fractions den = new fractions(A, 1);
+            Console.Write(numerator + " / " + denominator + " * " + A + " = ");
+            return comp(den);
+        }
+        public override string ToString() {
+            return numerator + "/" + denominator;
+        }
+    }
+    public class fractions_cach
+    {
+        private double cach;
+        public fractions_cach(double cach)
+        {
+            this.cach = cach;
+        }
+        public void Cach_is_NULL()
+        {
+            cach = 0;
+        }
+        public override string ToString() {
+            return Convert.ToString(cach);
+        }
+    }
+    class Work
     {
         Dictionary<string, int> more_meow;
         public Dictionary<string,int> Meow {get {return more_meow;}set { Console.WriteLine("НЕТ"); } }
@@ -112,7 +397,7 @@ namespace Lab_6
                         plus_meow(i.ToString());
                     }
                     else if(M=="lot_meow"){
-                        Console.WriteLine("Введите количество  мяуконий");
+                        Console.WriteLine("Введите количество мяуконий");
                         try
                         {
                             N = Convert.ToInt32(Console.ReadLine());
@@ -144,7 +429,7 @@ namespace Lab_6
                 }
                 else if (M == "lot_meow")
                 {
-                    Console.WriteLine("Введите количество  мяуконий");
+                    Console.WriteLine("Введите количество мяуконий");
                     try
                     {
                         N = Convert.ToInt32(Console.ReadLine());
