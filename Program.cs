@@ -94,21 +94,24 @@ class Home
             while (S != "stop")
             {
 
-                Console.WriteLine("\nВведите sum — чтобы сложить два вектора или вектор и число\nВведите minus — чтобы вычесть два вектора или вектор и число\nВведите comp — чтобы перемножить два вектора или вектор и число\nВведите div — чтобы разделить два вектора или вектор и число\nВведите New_num — чтобы задать новое значение числителя\nВведите New_den — чтобы задать новое значение знаменателя\nВведите Cache — чтобы получить вещественное значение дроби\nВведите stop — чтобы выйти из программы");
+                Console.WriteLine("\nВведите print — чтобы вывести все дроби\nВведите sum — чтобы сложить два вектора или вектор и число\nВведите minus — чтобы вычесть два вектора или вектор и число\nВведите comp — чтобы перемножить два вектора или вектор и число\nВведите div — чтобы разделить два вектора или вектор и число\nВведите Equals — чтобы клонировать элемент\nВведите Clone — чтобы клонировать элемент\nВведите New_num — чтобы задать новое значение числителя\nВведите New_den — чтобы задать новое значение знаменателя\nВведите Cache — чтобы получить вещественное значение дроби\nВведите stop — чтобы выйти из программы");
                 S = Console.ReadLine();
-                if (S == "sum") {
+                if (S == "sum")
+                {
                     a = 0;
                     b = 0;
                     foreach (var i in f)
                     {
-                        Console.WriteLine(f.IndexOf(i) + " " + i);
+                        Console.WriteLine(a + " " + i);
+                        a++;
                     }
                     Console.WriteLine("Выберите номер первого элемента");
                     try
                     {
                         a = Convert.ToInt32(Console.ReadLine());
                     }
-                    catch{
+                    catch
+                    {
                         a = 1;
                     }
                     Console.WriteLine("Выберите номер второго элемента");
@@ -130,13 +133,14 @@ class Home
                     }
                     Console.WriteLine(f[a] + f[b]);
                 }
-                if (S == "minus")
+                else if (S == "minus")
                 {
                     a = 0;
                     b = 0;
                     foreach (var i in f)
                     {
-                        Console.WriteLine(f.IndexOf(i) + " " + i);
+                        Console.WriteLine(a + " " + i);
+                        a++;
                     }
                     Console.WriteLine("Выберите номер первого элемента");
                     try
@@ -166,13 +170,14 @@ class Home
                     }
                     Console.WriteLine(f[a] - f[b]);
                 }
-                if (S == "div")
+                else if (S == "div")
                 {
                     a = 0;
                     b = 0;
                     foreach (var i in f)
                     {
-                        Console.WriteLine(f.IndexOf(i) + " " + i);
+                        Console.WriteLine(a + " " + i);
+                        a++;
                     }
                     Console.WriteLine("Выберите номер делимого");
                     try
@@ -202,13 +207,14 @@ class Home
                     }
                     Console.WriteLine(f[a] / f[b]);
                 }
-                if (S == "comp")
+                else if (S == "comp")
                 {
                     a = 0;
                     b = 0;
                     foreach (var i in f)
                     {
-                        Console.WriteLine(f.IndexOf(i) + " " + i);
+                        Console.WriteLine(a + " " + i);
+                        a++;
                     }
                     Console.WriteLine("Выберите номер первого множителя");
                     try
@@ -238,13 +244,14 @@ class Home
                     }
                     Console.WriteLine(f[a] * f[b]);
                 }
-                if(S== "New_num")
+                else if (S == "New_num")
                 {
                     a = 0;
                     b = 0;
                     foreach (var i in f)
                     {
-                        Console.WriteLine(f.IndexOf(i) + " " + i);
+                        Console.WriteLine(a + " " + i);
+                        a++;
                     }
                     Console.WriteLine("Выберите номер первого элемента");
                     try
@@ -270,13 +277,14 @@ class Home
                     }
                     f[a].new_num(b);
                 }
-                if (S == "New_den")
+                else if (S == "New_den")
                 {
                     a = 0;
                     b = 0;
                     foreach (var i in f)
                     {
-                        Console.WriteLine(f.IndexOf(i) + " " + i);
+                        Console.WriteLine(a + " " + i);
+                        a++;
                     }
                     Console.WriteLine("Выберите номер первого элемента");
                     try
@@ -302,13 +310,14 @@ class Home
                     }
                     f[a].new_den(b);
                 }
-                if (S == "Cache")
+                else if (S == "Cache")
                 {
                     a = 0;
                     b = 0;
                     foreach (var i in f)
                     {
-                        Console.WriteLine(f.IndexOf(i) + " " + i);
+                        Console.WriteLine(a + " " + i);
+                        a++;
                     }
                     Console.WriteLine("Выберите номер первого элемента");
                     try
@@ -329,7 +338,84 @@ class Home
                     }
                     Console.WriteLine(Cache[f[a]]);
                 }
-
+                else if (S == "Clone")
+                {
+                    a = 0;
+                    b = 0;
+                    foreach (var i in f)
+                    {
+                        Console.WriteLine(a + " " + i);
+                        a++;
+                    }
+                    Console.WriteLine("Выберите номер первого элемента");
+                    try
+                    {
+                        a = Convert.ToInt32(Console.ReadLine());
+                    }
+                    catch
+                    {
+                        a = 1;
+                    }
+                    if (a >= f.Count())
+                    {
+                        a = f.Count() - 1;
+                    }
+                    f.Add((fractions)f[a].Clone());
+                }
+                else if (S == "print")
+                {
+                    a = 0;
+                    foreach (var i in f)
+                    {
+                        Console.WriteLine(a + " " + i);
+                        a++;
+                    }
+                }
+                else if (S == "Equals")
+                {
+                    a = 0;
+                    b = 0;
+                    foreach (var i in f)
+                    {
+                        Console.WriteLine(a + " " + i);
+                        a++;
+                    }
+                    Console.WriteLine("Выберите номер первого элемента");
+                    try
+                    {
+                        a = Convert.ToInt32(Console.ReadLine());
+                    }
+                    catch
+                    {
+                        a = 1;
+                    }
+                    Console.WriteLine("Выберите номер второго элемента");
+                    try
+                    {
+                        b = Convert.ToInt32(Console.ReadLine());
+                    }
+                    catch
+                    {
+                        b = 1;
+                    }
+                    if (a >= f.Count())
+                    {
+                        a = f.Count() - 1;
+                    }
+                    if (b >= f.Count())
+                    {
+                        b = f.Count() - 1;
+                    }
+                    if (f[a].Equals(f[b])){
+                        
+                        Console.WriteLine("Они равны");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Они не равны");
+                    }
+                }
             }
         }
     }
+}
